@@ -50,7 +50,7 @@ public class CalculatorViewController implements Initializable {
        
        //check if 1 decimal is already in the number
        if (buttonValue.equals(".") && display.getText().contains("."))
-            {}//do nothing
+            {}//ignore the button because there is already a decimal
        else if (overWriteNumberInDisplay)
        {
            display.setText(buttonValue);
@@ -61,9 +61,8 @@ public class CalculatorViewController implements Initializable {
     }
     
     /**
-     * This method will check if it is the first number in an operation.  If it is,
-     * it will set the firstNumber instance variable and the operator
-     * 
+     * This method will add the number from the display and the operator to the 
+     * numberStack, calculate the value of the stack and update the display
      */
     public void operatorButtonPushed(ActionEvent event)
     {
@@ -72,10 +71,12 @@ public class CalculatorViewController implements Initializable {
         numberStack.add(display.getText()); //push the number on the stack
         numberStack.add(operator);          //push the operator on the stack
         numberStackLabel.setText(formatNumberStack());
-        double result = calculateStack();                
-        display.setText(Double.toString(result));
+        
+        //update the result   
+        display.setText(String.format("%f", calculateStack()));
         overWriteNumberInDisplay = true;    
         
+        //If the = sign was used, after the calculation, clear the stack
         if (operator.equals("="))
         {
             numberStack = new ArrayList<>();
@@ -84,8 +85,12 @@ public class CalculatorViewController implements Initializable {
             
     }
     
-    
-    
+
+    /**
+     * This method will parse over the ArrayList of entries.  Note: it does not support
+     * order of operations.  It will calculate the numbers as they were entered (same as a regular calculator)
+     * @return 
+     */
     public double calculateStack()
     {        
         double result = 0;
@@ -107,6 +112,7 @@ public class CalculatorViewController implements Initializable {
             {
                 num2 = Double.parseDouble(element);                
                 result = calculate(num1, operator, num2);
+                System.out.printf("Result: %f, num1: %f, operator: %s, num2: %f%n", result, num1, operator, num2);
                 num1 = result;
             }                
             else
