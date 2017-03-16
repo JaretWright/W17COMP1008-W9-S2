@@ -40,10 +40,9 @@ public class CalculatorViewController implements Initializable {
     private ArrayList<String> numberStack;
     private boolean overWriteNumberInDisplay;
     
-    
     /**
      * When the number buttons are pushed, this method will update the 
-     * text display
+     * display with the new number
      */
     public void numberButtonPushed(ActionEvent event)
     {
@@ -63,7 +62,7 @@ public class CalculatorViewController implements Initializable {
     
     /**
      * This method will add the number from the display and the operator to the 
-     * numberStack, calculate the value of the stack and update the display
+     * numberStack, it will then calculate the value of the stack and update the display
      */
     public void operatorButtonPushed(ActionEvent event)
     {
@@ -71,9 +70,9 @@ public class CalculatorViewController implements Initializable {
         
         numberStack.add(display.getText()); //push the number on the stack
         numberStack.add(operator);          //push the operator on the stack
-        numberStackLabel.setText(formatNumberStack());
+        numberStackLabel.setText(formatNumberStack());  //update the label to show the series of calculations
         
-        DecimalFormat formatWithoutTrailingZeros = new DecimalFormat("0.#");
+        DecimalFormat formatWithoutTrailingZeros = new DecimalFormat("0.#");    //this removes trailing zeros
 
         //update the result   
         display.setText(formatWithoutTrailingZeros.format(calculateStack()));
@@ -84,8 +83,7 @@ public class CalculatorViewController implements Initializable {
         {
             numberStack = new ArrayList<>();
             numberStackLabel.setText("");
-        }
-            
+        }        
     }
     
 
@@ -124,6 +122,13 @@ public class CalculatorViewController implements Initializable {
     }       
     
     
+    /**
+     * This method will return the result of a calculation
+     * @param num1 - a double
+     * @param operator - +, -, / or *
+     * @param num2 - a double
+     * @return 
+     */
     public double calculate(double num1, String operator, double num2)
     {
     if (operator.equals("+"))
@@ -138,6 +143,7 @@ public class CalculatorViewController implements Initializable {
         return 0;
 }
     
+    
     /**
      * This method will return the elements of an
      * ArrayList as a formatted String
@@ -148,14 +154,10 @@ public class CalculatorViewController implements Initializable {
         
         for (String element:numberStack)
         {
-            result += String.format("%s ",element);            
+            result += String.format("%s",element);            
         }
         return result;
-        
     }
-    
-    
-    
     
     
     /**
@@ -168,5 +170,4 @@ public class CalculatorViewController implements Initializable {
         overWriteNumberInDisplay = true;
         numberStackLabel.setText("");
     }    
-    
 }
