@@ -115,7 +115,6 @@ public class CalculatorViewController implements Initializable {
             {
                 num2 = Double.parseDouble(element);                
                 result = calculate(num1, operator, num2);
-                System.out.printf("Result: %f, num1: %f, operator: %s, num2: %f%n", result, num1, operator, num2);
                 num1 = result;
             }                
             else
