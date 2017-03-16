@@ -1,6 +1,7 @@
 package w17march15;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -72,8 +73,10 @@ public class CalculatorViewController implements Initializable {
         numberStack.add(operator);          //push the operator on the stack
         numberStackLabel.setText(formatNumberStack());
         
+        DecimalFormat formatWithoutTrailingZeros = new DecimalFormat("0.#");
+
         //update the result   
-        display.setText(String.format("%f", calculateStack()));
+        display.setText(formatWithoutTrailingZeros.format(calculateStack()));
         overWriteNumberInDisplay = true;    
         
         //If the = sign was used, after the calculation, clear the stack
